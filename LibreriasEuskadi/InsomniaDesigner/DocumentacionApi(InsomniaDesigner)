@@ -1,0 +1,261 @@
+openapi: 3.0.1
+info:
+  title: Librerias Euskadi REST JDBC (Raul Lopez Hernando)
+  description: Documentacion Ejercicio Examen
+  version: 1.0.0
+servers:
+  - url: 'http://localhost:8080/api/'
+    description: Servidor Librerias Euskadi REST JDBC
+    variables: {}
+paths:
+  '/libros/{id}':
+    get:
+      summary: Obtener un libro por id
+      operationId: getById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Devuelve el libro cuyo id es el que se ha pedido
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Libro'
+        '404':
+          description: No encontrado
+    put:
+      operationId: update
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Libro'
+      responses:
+        '400':
+           description: Petición incorrecta
+        '200':
+          description: Modificado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Libro'
+    delete:
+      operationId: delete
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: Sin contenido
+        '404':
+          description: No encontrado
+        
+  /libros:
+    get:
+      operationId: obtenerTodosLosLibros
+      responses:
+        '200':
+          description: 'Operacion realizada con exito'
+          content:
+            application/json:
+              schema:
+                type: 'array'
+                items:
+                  $ref: '#/components/schemas/Libro'
+    post:
+      operationId: insert
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Libro'
+      responses:
+        '201':
+          description: Creado
+        '400':
+           description: Petición incorrecta
+
+  paths:
+  '/autores/{id}':
+    get:
+      summary: Obtener un autor por id
+      operationId: getById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Devuelve el autor cuyo id es el que se ha pedido
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Autor'
+        '404':
+          description: No encontrado
+    put:
+      operationId: update
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Autor'
+      responses:
+        '400':
+           description: Petición incorrecta
+        '200':
+          description: Modificado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Autor'
+    delete:
+      operationId: delete
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: Sin contenido
+        '404':
+          description: No encontrado
+        
+  /autores:
+    get:
+      operationId: obtenerTodosLosAutores
+      responses:
+        '200':
+          description: 'Operacion realizada con exito'
+          content:
+            application/json:
+              schema:
+                type: 'array'
+                items:
+                  $ref: '#/components/schemas/Autor'
+    post:
+      operationId: insert
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Autor'
+      responses:
+        '201':
+          description: Creado
+        '400':
+           description: Petición incorrecta
+  
+
+  '/libros/libro/{nombreLibro}':
+    get:
+    
+      operationId: ObtenerLibroPorTitulo
+      summary: Obtener libro por Titulo
+      parameters:
+        - name: nombreLibro
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 'OPeracion realizada con exito'
+          content:
+            application/json:
+              schema:
+                type: 'object'
+                items:
+                  $ref: '#/components/schemas/Libro'
+                  
+        '404':
+          'description': No encontrado
+          
+  '/libros/autor':
+    get:
+      operationId: Obtener Libros con Su Autor
+      summary: Obtener Libros Con Su Autor
+      responses:
+        '200':
+          description: 'OPeracion realizada con exito'
+          content:
+            application/json:
+              schema:
+                type: 'array'
+                items:
+                  $ref: '#/components/schemas/Libro'
+                  
+        '404':
+          'description': No encontrado
+                  
+      
+components:
+  schemas:
+    Libro:
+      type: object
+      properties:
+        idlibros:
+          type: integer
+          format: int64
+        isbn:
+          type: integer
+          format: int64
+        nombre:
+          type: string
+        paginas:
+          type: integer
+          format: int64
+        editorial:
+          type: string
+        idioma:
+          type: string
+        anio:
+          type: string
+        Autor:
+          $ref: "#/components/schemas/Autor"
+          
+    Autor:
+      type: object
+      properties:
+        idautores:
+          type: integer
+          format: int64
+        nombre:
+          type: String
+        edad:
+          type: integer
+          format: int64
+        descripcion:
+          type: String
+          
+  
+ 
